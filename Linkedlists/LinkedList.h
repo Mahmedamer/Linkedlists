@@ -105,7 +105,7 @@ public:
 	{
 		Node<T>* ptr = Head;
 		while (ptr) {
-			if (ptr->getItem() == key)
+			if (ptr->getItem() == Key)
 				return true;
 			ptr = ptr->getNext();
 		}
