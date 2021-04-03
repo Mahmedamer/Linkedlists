@@ -323,10 +323,44 @@ public:
 	}
 
 	////////////////     Requirements of Exercise 3  ///////////////////
-	//
-	// Implement the following member functions
 
+	//[a] PrintKth
+	//Prints data of the kth item in a linked list.
+	//The function should print "Beyond List Length" if K is beyond length of the list.
+	//First node index is 1
+	void PrintKth(int index)
+	{
+		int i = 1;
+		Node<T>* ptr = Head;
+		while (ptr)
+		{
+			if (i == index)
+				cout << ptr->getItem() << endl;
+			ptr = ptr->getNext();
+			i++;
+		}
+		if (index > i)
+			cout << "Beyond List Length" << endl;
+	}
 
+	//[c] RemoveMin
+	//Extracts the node with the min data value in a linked list.
+	//The function should remove the node from the list and returns a pointer to it
+	Node<T>* RemoveMin()
+	{
+		Node<T>* ptr = Head;
+		if (!ptr)
+		{
+			return nullptr;
+		}
+		if (!ptr->getNext())
+		{
+			Head = nullptr;
+			return ptr;
+		}
+		// If Min is Head
+
+	}
 };
 
 #endif	
