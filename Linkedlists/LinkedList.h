@@ -112,16 +112,55 @@ public:
 
 	//[3]CountOccurance
 	//returns how many times a certain value appeared in the list
-	int CountOccurance(const T &value);
+	int CountOccurance(const T& value)
+	{
+		int count = 0;
+		Node<T>* ptr = Head;
+		while (ptr) {
+			if (ptr->getItem() == value)
+				count++;
+			ptr = ptr->getNext();
+		}
+		return count;
+	}
 
 	//[4] DeleteFirst
 	//Deletes the first node in the list
-	void DeleteFirst();
+	void DeleteFirst()
+	{
+		if (Head)
+		{
+			Node<T>* ptr = Head->getNext();
+			delete Head;
+			Head = ptr;
+		}
+	}
 
 
 	//[5] DeleteLast
 	//Deletes the last node in the list
-	void DeleteLast();
+	void DeleteLast()
+	{
+		Node<T>* ptr = Head;
+		if (!ptr)
+		{
+			return;
+		}
+		if (!ptr->next) {
+			delete ptr;
+			Head = nullptr;
+			return;
+		}
+		Node<T>* beforelast = ptr;
+		ptr = ptr->getNext();
+		while (ptr->getNext())
+		{
+			beforelast = ptr;
+			ptr = ptr->getNext()
+		}
+		delete ptr;
+		beforelast->setNext(nullptr);
+	}
 
 	//[6] DeleteNode
 	//deletes the first node with the given value (if found) and returns true
