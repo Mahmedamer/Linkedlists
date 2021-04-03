@@ -142,15 +142,19 @@ public:
 	void DeleteLast()
 	{
 		Node<T>* ptr = Head;
-		if (!ptr)
+		// List Contains 0 Elements
+		if (!ptr) 
 		{
 			return;
 		}
-		if (!ptr->next) {
+		// List Contains 1 Element 
+		if (!ptr->next) 
+		{
 			delete ptr;
 			Head = nullptr;
 			return;
 		}
+		// Otherwise
 		Node<T>* beforelast = ptr;
 		ptr = ptr->getNext();
 		while (ptr->getNext())
@@ -166,18 +170,87 @@ public:
 	//deletes the first node with the given value (if found) and returns true
 	//if not found, returns false
 	//Note: List is not sorted
-	bool DeleteNode(const T &value);	
+	bool DeleteNode(const T& value)
+	{
+		Node<T>* ptr = Head;
+		// List Contains 0 Elements
+		if (!ptr) 
+		{
+			return false;
+		}
+		// List Contains 1 Element
+		if (!ptr->getNext()) 
+		{
+			if (ptr->getItem() == value) {
+				delete ptr;
+				Head = nullptr;
+				return true;
+			}
+		}
+		// Otherwise
+		Node<T>* prev = ptr;
+		ptr = ptr->getNext();
+		while (ptr) {
+			if (ptr->getItem() == value)
+			{
+				prev->setNext(ptr->getNext());
+				delete ptr;
+				return true;
+			}
+			prev = ptr;
+			ptr = ptr->getNext();
+		}
+		return false;
+	}
 
 	//[7] DeleteNodes
 	//deletes ALL node with the given value (if found) and returns true
 	//if not found, returns false
 	//Note: List is not sorted
-	bool DeleteNodes(const T &value);	
+	bool DeleteNodes(const T& value)
+	{
+		Node<T>* ptr = Head;
+		// List Contains 0 Elements
+		if (!ptr)
+		{
+			return false;
+		}
+		// List Contains 1 Element
+		if (!ptr->getNext())
+		{
+			if (ptr->getItem() == value) {
+				delete ptr;
+				Head = nullptr;
+				return true;
+			}
+		}
+		// Otherwise
+		bool result = false;
+		Node<T>* prev = ptr;
+		ptr = ptr->getNext();
+		while (ptr) {
+			if (ptr->getItem() == value)
+			{
+				prev->setNext(ptr->getNext());
+				delete ptr;
+				result = true;
+			}
+			else
+			{
+				prev = ptr;
+			}
+			ptr = prev->getNext();
+		}
+		return result;
+	}
 
 	//[8]Merge
 	//Merges the current list to another list L by making the last Node in the current list 
 	//point to the first Node in list L
-	void Merge(const LinkedList& L);
+	void Merge(const LinkedList& L)
+	{
+
+	}
 
 	//[9] Reverse
 	//Reverses the linked list (without allocating any new Nodes)
