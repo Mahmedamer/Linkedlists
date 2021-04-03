@@ -265,7 +265,8 @@ public:
 			Node<T>* s = L.Head;
 			while (s)
 			{
-				Node<T>* N = new Node(s->getItem());
+				T item = s->getItem();
+				Node<T>* N = new Node<T>(item);
 				ptr->setNext(N);
 				ptr = N;
 				s = s->getNext();
@@ -281,14 +282,15 @@ public:
 				return;
 			}
 			// Set Head Of Current List To Be The Same As The Head Of L
-			Node<T>* N = new Node(s->getItem());
+			Node<T>* N = new Node<T>(s->getItem());
 			Head = N;
 			ptr = Head;
 			s = s->getNext();
 			// Start Appending New Nodes From L To The End Of The Current List
 			while (s)
 			{
-				Node<T>* N = new Node(s->getItem());
+				T item = s->getItem();
+				Node<T>* N = new Node<T>(item);
 				ptr->setNext(N);
 				ptr = N;
 				s = s->getNext();
