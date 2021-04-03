@@ -82,12 +82,33 @@ public:
 	//inserts a new node at end if the list
 	void InsertEnd(const T& data)
 	{
-
+		Node<T>* N = new Node<T>(data);
+		Node<T>* ptr = Head;
+		if (!Head)
+		{
+			Head = N;
+			return;
+		}
+		Node<T>* ptr = Head;
+		while (ptr->getNext()) 
+		{
+			ptr = ptr->getNext();
+		}
+		ptr->setNext(N);
 	}
 
 	//[2]Find 
 	//searches for a given value in the list, returns true if found; false otherwise.
-	bool Find(int Key);
+	bool Find(T Key)
+	{
+		Node<T>* ptr = Head;
+		while (ptr) {
+			if (ptr->getItem() == key)
+				return true;
+			ptr = ptr->getNext();
+		}
+		return false;
+	}
 
 	//[3]CountOccurance
 	//returns how many times a certain value appeared in the list
