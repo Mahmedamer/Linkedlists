@@ -34,6 +34,14 @@ int main()
 	L1.Reverse();
 	cout << "List 1 :";
 	L1.PrintList();
+	cout << "-----------------Delete First Element of List 1-----------------" << endl;
+	L1.DeleteFirst();
+	cout << "List 1 :";
+	L1.PrintList();
+	cout << "-----------------Delete Last Element of List 2-----------------" << endl;
+	L2.DeleteLast();
+	cout << "List 2 :";
+	L2.PrintList();
 	cout << "-------------------Merge List 2 To List 1---------------------" << endl;
 	L1.Merge(L2);
 	cout << "List 1 :";

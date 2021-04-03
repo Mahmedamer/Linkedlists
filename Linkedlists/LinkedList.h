@@ -151,7 +151,7 @@ public:
 			return;
 		}
 		// List Contains 1 Element 
-		if (!ptr->next) 
+		if (!ptr->getNext()) 
 		{
 			delete ptr;
 			Head = nullptr;
@@ -163,7 +163,7 @@ public:
 		while (ptr->getNext())
 		{
 			beforelast = ptr;
-			ptr = ptr->getNext()
+			ptr = ptr->getNext();
 		}
 		delete ptr;
 		beforelast->setNext(nullptr);
