@@ -322,6 +322,11 @@ public:
 		Head = prev;
 	}
 
+	////////////////     Requirements of Exercise 3  ///////////////////
+	//
+	// Implement the following member functions
+
+
 };
 
 #endif	
