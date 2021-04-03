@@ -11,13 +11,15 @@ int main()
 	LinkedList<int> L;	//create an object of class LinkedList
 	int val;
 
-	cout<<"\nPlease enter int values to add to the list (-1 to stop):\n";
+	cout<<"Please enter int values to add to the list (-1 to stop):\n";
 	cin>>val;
 	while(val != -1)
 	{
-		L.InsertBeg(val);
+		L.InsertEnd(val);
 		cin>>val;
 	}
+	L.PrintList();
+	L.Reverse();
 	L.PrintList();
 
 	cout<<" \n ..............  Lab Requirements .............\n";
