@@ -10,8 +10,14 @@ private:
 	Node<T> *Head;	//Pointer to the head of the list
 	//You can add tail pointer too (depending on your problem)
 public:
-
-
+	Node<T>* getHead() const
+	{
+		return Head;
+	}
+	void setHead(Node<T>*N)
+	{
+		 Head = N;
+	}
 	LinkedList()
 	{
 		Head = nullptr;
@@ -342,7 +348,6 @@ public:
 		if (index > i)
 			cout << "Beyond List Length" << endl;
 	}
-
 	//[c] RemoveMin
 	//Extracts the node with the min data value in a linked list.
 	//The function should remove the node from the list and returns a pointer to it
