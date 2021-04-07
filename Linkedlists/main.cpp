@@ -313,7 +313,6 @@ void ShiftLargest(LinkedList<T>& L)
 	Node<T>* ptr = L.getHead();
 	if (!ptr || !ptr->getNext())
 		return;
-	Node<T>* prev = ptr;
 	while (ptr->getNext())
 	{
 		if (ptr->getItem() > ptr->getNext()->getItem())
@@ -325,6 +324,34 @@ void ShiftLargest(LinkedList<T>& L)
 		ptr = ptr->getNext();
 	}
 
+}
+
+template<class T>
+void RemoveDuplicates(LinkedList<T>& L)
+{
+	Node<T>* ptr = L.getHead();
+	if (!ptr || !ptr->getNext())
+		return;
+	while (ptr)
+	{
+		T data = ptr->getItem();
+		Node<T>* prev = ptr;
+		Node<T>* Next = ptr->getNext();
+		while (Next)
+		{
+			if (Next->getItem() == data)
+			{
+				prev->setNext(Next->getNext());
+				delete Next;
+			}
+			else
+			{
+				prev = Next;
+			}
+			Next = prev->getNext();
+		}
+		ptr = ptr->getNext();
+	}
 }
 ///////////////////////////////////////////////////////////////////////
 
@@ -349,7 +376,7 @@ int main()
 	//	L2.InsertEnd(val);
 	//	cin >> val;
 	//}
-	ShiftLargest(L1);
+	RemoveDuplicates(L1);
 	//L3 = *SumLists(L1,L2);
 	cout << "List 1 :" ;
 	L1.PrintList();
