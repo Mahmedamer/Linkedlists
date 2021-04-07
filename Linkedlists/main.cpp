@@ -254,8 +254,77 @@ LinkedList<T>* MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
 template<class T>
 LinkedList<T>* SumLists(LinkedList<T>& L1, LinkedList<T>& L2)
 {
+	if (L1.getCount() != L2.getCount())
+	{
+		return nullptr;
+	}
 	LinkedList<T>* L = new LinkedList<T>();
+	Node<T>* Lptr = L->getHead();
+	Node<T>* L1ptr = L1.getHead();
+	Node<T>* L2ptr = L2.getHead();
+	while (L1ptr || L2ptr)
+	{
+		Node<T>* N = new Node<T>(L1ptr->getItem() + L2ptr->getItem());
+		if (!Lptr)
+		{
+			L->setHead(N);
+			Lptr = N;
+		}
+		else
+		{
+			Lptr->setNext(N);
+			Lptr = N;
+		}
+		L1ptr = L1ptr->getNext();
+		L2ptr = L2ptr->getNext();
+	}
 	return L;
+}
+
+template<class T>
+void Reorder_X(LinkedList<T>& L , T X)
+{
+	Node<T>* ptr = L.getHead();
+	if (!ptr || !ptr->getNext())
+		return;
+	Node<T>* prev = ptr;
+	ptr = ptr->getNext();
+	while (ptr)
+	{
+		if (ptr->getItem() <= X)
+		{
+			prev->setNext(ptr->getNext());
+			ptr->setNext(L.getHead());
+			L.setHead(ptr);
+		}
+		else 
+		{
+			prev = ptr;
+		}
+		ptr = prev->getNext();
+	}
+	
+}
+
+
+template<class T>
+void ShiftLargest(LinkedList<T>& L)
+{
+	Node<T>* ptr = L.getHead();
+	if (!ptr || !ptr->getNext())
+		return;
+	Node<T>* prev = ptr;
+	while (ptr->getNext())
+	{
+		if (ptr->getItem() > ptr->getNext()->getItem())
+		{
+			T item1 = ptr->getItem();
+			ptr->setItem(ptr->getNext()->getItem());
+			ptr->getNext()->setItem(item1);
+		}
+		ptr = ptr->getNext();
+	}
+
 }
 ///////////////////////////////////////////////////////////////////////
 
@@ -273,20 +342,21 @@ int main()
 		L1.InsertEnd(val);
 		cin>>val;
 	}
-	cout << "Please enter int values to add to the list 2 (-1 to stop):\n";
-	cin >> val;
-	while (val != -1)
-	{
-		L2.InsertEnd(val);
-		cin >> val;
-	}
-	L3 = *SumLists(L1,L2);
+	//cout << "Please enter int values to add to the list 2 (-1 to stop):\n";
+	//cin >> val;
+	//while (val != -1)
+	//{
+	//	L2.InsertEnd(val);
+	//	cin >> val;
+	//}
+	ShiftLargest(L1);
+	//L3 = *SumLists(L1,L2);
 	cout << "List 1 :" ;
 	L1.PrintList();
-	cout << "List 2 :";
-	L2.PrintList();
-	cout << "List 3 :";
-	L3.PrintList();
+	//cout << "List 2 :";
+	//L2.PrintList();
+	//cout << "List 3 :";
+	//L3.PrintList();
 	//cout << "-----------------Delete First Element of List 1-----------------" << endl;
 	//L1.DeleteFirst();
 	//cout << "List 1 :";

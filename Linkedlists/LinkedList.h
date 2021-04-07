@@ -77,7 +77,17 @@ public:
 		}
 	}
 
-
+	int getCount()
+	{
+		int i = 0;
+		Node<T>* ptr = Head;
+		while (ptr)
+		{
+			i++;
+			ptr = ptr->getNext();
+		}
+		return i;
+	}
 
 	////////////////     Requirements of Exercise 1  ///////////////////
 	//
