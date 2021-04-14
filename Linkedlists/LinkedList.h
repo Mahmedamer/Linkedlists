@@ -89,6 +89,47 @@ public:
 		return i;
 	}
 
+	LinkedList<T> (const LinkedList<T>& L)
+	{
+		Node<T>* ptr = L.getHead();
+		if (!ptr)
+		{
+			return;
+		}
+		Node<T>* N = new Node<T>(ptr->getItem());
+		Head=N;
+		Node<T>* prev = N;
+		ptr = ptr->getNext();
+		while (ptr)
+		{
+			Node<T>* N = new Node<T>(ptr->getItem());
+			prev->setNext(N);
+			prev = N;
+			ptr = ptr->getNext();
+		}
+	}
+
+	void operator = (const LinkedList<T>& L)
+	{
+		DeleteAll();
+		Node<T>* ptr = L.getHead();
+		if (!ptr)
+		{
+			return;
+		}
+		Node<T>* N = new Node<T>(ptr->getItem());
+		Head=N;
+		Node<T>* prev = N;
+		ptr = ptr->getNext();
+		while (ptr)
+		{
+			Node<T>* N = new Node<T>(ptr->getItem());
+			prev->setNext(N);
+			prev = N;
+			ptr = ptr->getNext();
+		}
+	}
+
 	////////////////     Requirements of Exercise 1  ///////////////////
 	//
 	// Implement the following member functions
@@ -338,29 +379,90 @@ public:
 		Head = prev;
 	}
 
+	void newReverse() {
+		newReverse(Head, nullptr, nullptr);
+	}
+	void newReverse(Node<T>* &head, Node<T>* ptr, Node<T>* next)
+	{
+		if (head == nullptr || head->getNext() == nullptr)
+			return;
+		if (next == nullptr && ptr != nullptr)
+		{
+			head = ptr;
+			return;
+		}
+		if (ptr == nullptr)
+		{
+			ptr = head;
+		}
+		if (next == nullptr)
+		{
+			next = ptr->getNext();
+		}
+		newReverse(head, next, next->getNext());
+		next->setNext(ptr);
+	}
 	////////////////     Requirements of Exercise 3  ///////////////////
 
-	//[a] PrintKth
-	//Prints data of the kth item in a linked list.
-	//The function should print "Beyond List Length" if K is beyond length of the list.
-	//First node index is 1
 	void PrintKth(int index)
 	{
 		int i = 1;
 		Node<T>* ptr = Head;
 		while (ptr)
 		{
-			if (i == index)
+			if (i == index){
 				cout << ptr->getItem() << endl;
+				return ;
+			}
 			ptr = ptr->getNext();
 			i++;
 		}
-		if (index > i)
-			cout << "Beyond List Length" << endl;
+		cout << "Beyond List Length" << endl;
 	}
-	//[c] RemoveMin
-	//Extracts the node with the min data value in a linked list.
-	//The function should remove the node from the list and returns a pointer to it
+
+	bool InsertSorted(T data)
+	{
+		Node<T>* ptr = Head;
+		if (!ptr)
+		{
+			Node<T>* N = new Node<T>(data);
+			Head = N;
+			return true;
+		}
+		Node<T>* prev = nullptr;
+		while (ptr)
+		{
+			if (ptr->getItem() > data)
+			{
+				Node<T>* N = new Node<T>(data);
+				if(prev == nullptr)
+				{
+					N->setNext(Head);
+					Head = N;
+					return true;
+				}
+				else
+				{
+					prev->setNext(N);
+					N->setNext(ptr);
+				}
+				return true;
+			}
+			else if (ptr->getItem() < data)
+			{
+				prev = ptr;
+				ptr = ptr->getNext();
+			}
+			else
+			{
+				return false;
+			}
+		}
+		Node<T>* N = new Node<T>(data);
+		prev->setNext(N);
+		return true;
+	}
+	
 	Node<T>* RemoveMin()
 	{
 		Node<T>* ptr = Head;
@@ -373,9 +475,132 @@ public:
 			Head = nullptr;
 			return ptr;
 		}
-		// If Min is Head
-
+		Node<T>* min;
+		Node<T>* prev = nullptr;
+		if(ptr->getItem() < ptr->getNext()->getItem())
+		{
+			min = ptr;
+		}
+		else
+		{
+			prev = ptr;
+			min = ptr->getNext();
+		}
+		Node<T>* rprev = ptr;
+		ptr = ptr->getNext();
+		while(ptr)
+		{
+			if(ptr->getItem() < min->getItem())
+			{
+				min = ptr;
+				prev = rprev;
+			}
+			rprev = ptr;
+			ptr= ptr->getNext();
+		}
+		if(!prev)
+		{
+			Head = Head->getNext();
+		}
+		else
+		{
+			prev->setNext(min->getNext());
+		}
+		return min;
 	}
+
+	LinkedList<T>* CloneList()
+	{
+		LinkedList<T>* Clone = new LinkedList<T>();
+		Node<T>* ptr = Head;
+		if (!ptr)
+		{
+			return Clone;
+		}
+		Node<T>* N = new Node<T>(ptr->getItem());
+		Clone->setHead(N);
+		Node<T>* cptr = N;
+		ptr = ptr->getNext();
+		// same as insert end                                         --------------------------Important-----------------------
+		while (ptr)
+		{
+			Node<T>* N = new Node<T>(ptr->getItem());
+			cptr->setNext(N);
+			cptr = N;
+			ptr = ptr->getNext();
+		}
+		return Clone;
+	}
+	
+	void SignSplit(LinkedList<T>*& Lneg, LinkedList<T>*& Lpos)
+	{
+		Lneg = new LinkedList<T>();
+		Lpos = new LinkedList<T>();
+		Node<T>* ptr = Head;
+		Node<T>* posptr = Lneg->Head;
+		Node<T>* negptr = Lpos->Head;
+		Node<T>* prev = nullptr;
+		while (ptr)
+		{
+			if (ptr->getItem() > 0)
+			{
+				Node<T>* N = new Node<T>(ptr->getItem());
+				if (!posptr)
+				{
+					Lpos->Head = N;
+					posptr = N;
+				}
+				else
+				{
+					posptr->setNext(N);
+					posptr = N;
+				}
+				if(prev)
+				{
+					prev->setNext(ptr->getNext());
+					delete ptr;
+					ptr = prev->getNext();
+				}
+				else
+				{
+					Head = Head->getNext();
+					ptr = Head;
+				}
+			}
+			else if (ptr->getItem() < 0)
+			{
+				Node<T>* N = new Node<T>(ptr->getItem());
+				if (!negptr)
+				{
+					Lneg->Head =N;
+					negptr = N;
+				}
+				else
+				{
+					negptr->setNext(N);
+					negptr = N;
+				}
+				if(prev)
+				{
+					prev->setNext(ptr->getNext());
+					delete ptr;
+					ptr = prev->getNext();
+				}
+				else
+				{
+					Head = Head->getNext();
+					ptr = Head;
+				}
+			}
+			else
+			{
+				prev = ptr;
+				ptr = prev->getNext();
+
+			}
+		}
+	}
+
 };
 
 #endif	

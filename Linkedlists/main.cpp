@@ -1,9 +1,10 @@
 #include "LinkedList.h"
 #include <iostream>
+#include "Polynomial.h"
 using namespace std;
 
-//Function prototypes 
-
+//Functions 
+#pragma region Global
 template<class T>
 bool InsertSorted(LinkedList<T>& L, T data)
 {
@@ -176,10 +177,10 @@ LinkedList<Dictionary<T>>* MakeDictionary(LinkedList<T>& L)
 }
 
 template<class T>
-LinkedList<T>* MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
+LinkedList<T> MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
 {
-	LinkedList<T>* L = new LinkedList<T>();
-	Node<T>* Lptr = L->getHead();
+	LinkedList<T> L;
+	Node<T>* Lptr = L.getHead();
 	Node<T>* L1ptr = L1.getHead();
 	Node<T>* L2ptr = L2.getHead();
 	while (L1ptr || L2ptr)
@@ -192,7 +193,7 @@ LinkedList<T>* MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
 				L1ptr = L1ptr->getNext();
 				if (!Lptr)
 				{
-					L->setHead(N);
+					L.setHead(N);
 					Lptr = N;
 				}
 				else
@@ -207,7 +208,7 @@ LinkedList<T>* MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
 				L2ptr = L2ptr->getNext();
 				if (!Lptr)
 				{
-					L->setHead(N);
+					L.setHead(N);
 					Lptr = N;
 				}
 				else
@@ -223,7 +224,7 @@ LinkedList<T>* MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
 			L1ptr = L1ptr->getNext();
 			if (!Lptr)
 			{
-				L->setHead(N);
+				L.setHead(N);
 				Lptr = N;
 			}
 			else
@@ -238,7 +239,7 @@ LinkedList<T>* MergeSorted(LinkedList<T>& L1, LinkedList<T>& L2)
 			L2ptr = L2ptr->getNext();
 			if (!Lptr)
 			{
-				L->setHead(N);
+				L.setHead(N);
 				Lptr = N;
 			}
 			else
@@ -282,7 +283,7 @@ LinkedList<T>* SumLists(LinkedList<T>& L1, LinkedList<T>& L2)
 }
 
 template<class T>
-void Reorder_X(LinkedList<T>& L , T X)
+void Reorder_X(LinkedList<T>& L, T X)
 {
 	Node<T>* ptr = L.getHead();
 	if (!ptr || !ptr->getNext())
@@ -297,13 +298,13 @@ void Reorder_X(LinkedList<T>& L , T X)
 			ptr->setNext(L.getHead());
 			L.setHead(ptr);
 		}
-		else 
+		else
 		{
 			prev = ptr;
 		}
 		ptr = prev->getNext();
 	}
-	
+
 }
 
 
@@ -353,13 +354,15 @@ void RemoveDuplicates(LinkedList<T>& L)
 		ptr = ptr->getNext();
 	}
 }
+
 ///////////////////////////////////////////////////////////////////////
+#pragma endregion
 
 int main()
 {
 	LinkedList<int> L1;	//create an object of class LinkedList
-	LinkedList<int> L2;	//create an object of class LinkedList
-	LinkedList<int> L3;	//create an object of class LinkedList
+	//LinkedList<int> L2;	//create an object of class LinkedList
+	//LinkedList<int> L3;	//create an object of class LinkedList
 	int val;
 
 	cout<<"Please enter int values to add to the list 1 (-1 to stop):\n";
@@ -376,14 +379,40 @@ int main()
 	//	L2.InsertEnd(val);
 	//	cin >> val;
 	//}
-	RemoveDuplicates(L1);
-	//L3 = *SumLists(L1,L2);
+	/*----------------------------------------------*/
+	//cout<<"List 1 : "<<endl;
+	//for(int i=0 ;i<=L1.getCount()+1;i++)
+	//	L1.PrintKth(i);
+	//cout<<endl;
+	/*----------------------------------------------*/
+	//L1.InsertSorted(1);
+	//L1.InsertSorted(3);
+	//L1.InsertSorted(10);
+	L1.newReverse();
 	cout << "List 1 :" ;
 	L1.PrintList();
-	//cout << "List 2 :";
+	/*----------------------------------------------*/
+	//L2 = *L1.CloneList();
+	//cout << "List 2 :" ;
 	//L2.PrintList();
-	//cout << "List 3 :";
-	//L3.PrintList();
+	/*----------------------------------------------*/
+	//cout<<"After Split "<<endl;
+	//LinkedList<int>* LN;
+	//LinkedList<int>* LP;
+	//L1.SignSplit(LN,LP);
+	//cout << "List 1 :" ;
+	//L1.PrintList();
+	//cout << "List 2 :" ;
+	//LN->PrintList();
+	//cout << "List 3 :" ;
+	//LP->PrintList();
+	//delete LN;
+	//delete LP;
+	/*-------------------------------------------------*/
+	//Node<int> *N = L1.RemoveMin();
+	//cout << "Removed : "<<N->getItem()<<endl;
+	//cout << "List 1 :" ;
+	//L1.PrintList();
 	//cout << "-----------------Delete First Element of List 1-----------------" << endl;
 	//L1.DeleteFirst();
 	//cout << "List 1 :";
@@ -418,6 +447,32 @@ int main()
 	//L1.Reverse();
 	//cout << "List 1 :";
 	//L1.PrintList();
+
+	//Polynomial P1, P2;
+	//P1.AddTerm(Term(0, -20));
+	//P1.AddTerm(Term(2, -7));
+	//P1.AddTerm(Term(4, 52));
+	//P2.AddTerm(Term(5, 30));
+	//P2.AddTerm(Term(3, 2));
+	//P2.AddTerm(Term(0, -10));
+	//P2.AddTerm(Term(4, -10));
+	//P1.PrintPoly();
+	//P2.PrintPoly();
+	//cout << P1.getCoeff(4) << endl;
+	//cout << P1.getCoeff(3) << endl;
+	//cout << P1.getCoeff(2) << endl;
+	//cout << P2.getCoeff(2) << endl;
+	//cout << P2.getCoeff(1) << endl;
+	//cout << P2.getCoeff(0) << endl;
+	//P1.setCoeff(0, 2);
+	//P1.setCoeff(10, 5);
+	//P1.setCoeff(20, 5);
+	//P1.setCoeff(20, 0);
+	//P1.PrintPoly();
+	//P2.PrintPoly();
+	//P1.AddPoly(P2);
+	//P1.PrintPoly();
+	//P2.PrintPoly();
 	return 0;
 }
 
